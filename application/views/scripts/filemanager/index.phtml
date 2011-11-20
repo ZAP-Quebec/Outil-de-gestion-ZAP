@@ -1,0 +1,28 @@
+<h1>Gestionnaire de fichiers</h1>
+<br />
+<p>
+<a href="<?php echo $this->url(array('controller' => 'filemanager','action' => 'index'), 'default', true) ?>">Racine</a> / 
+
+</p>
+
+<?php //print_r($this->files); ?>
+
+<table>
+    <tr>
+        <th> </th>
+        <th>Nom du fichier</th>
+    </tr>
+
+    <?php foreach($this->files as $file) : ?>
+    <tr>
+        <?php if ($file['type'] == "dir") {?>
+            <td><img src="images/icons/folder.png" /></td>
+            <td><a href="?dir=<?php echo $this->escape($file['name']); ?>/"><?php echo $this->escape($file['name']); ?></a></td>
+        <?php } else { ?>
+            <td><img src="images/icons/page_white.png" /></td>
+            <td><a href="?dir=<?php echo $this->escape($this->user_dir); ?>&file=<?php echo $this->escape($file['name']); ?>"><?php echo $this->escape($file['name']); ?></a></td>
+        <?php } ?>
+    </tr>
+    <?php endforeach; ?>
+
+</table>

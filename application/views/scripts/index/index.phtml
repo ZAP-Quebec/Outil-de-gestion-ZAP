@@ -1,0 +1,88 @@
+<?php /*$this->dialogContainer('dialog1',
+null, array('draggable' => false,
+'modal' => true,
+'resizable' => false,
+'title' => 'Bienvenu sur le site de gestion!',
+'closeOnEscape' => true));*/ ?>
+<div id="dialog1" class="dialog1" style="display:none;"><p>L'outil de gestion est en développement.</p><br/>
+<p>
+Vous pouvez consulter la liste des personnes ayant accès à partir du lien <span style="color: blue;">Liste des utilisateurs</span>.</p><br/>
+<p>Le module Moijezap est fonctionnel depuis septembre et <span style="color: red;">les données sont modifiées en temps réel avec le site moijezap.org</span></p><br/><p>Aussi
+, prendre note que <span style="color: red;">les données (excluant le module moijezap) seront supprimées</span> pour laisser place aux réelles en temps venu.</p><br/><p>Bonne visite.</p></div>
+
+<h1>Bienvenue <?php $auth = Zend_Auth::getInstance(); echo($auth->getIdentity()->firstname); ?>!</h1>
+
+<h2>Clients</h2>
+<p class="info">Il s'agit de calculs en temps r&eacute;el.</p>
+<?php
+    $customers = new ZAP_Model_Customers();
+    $customers_enregistres = $customers->fetchAll();
+    $customers_contrats = $customers->fetchAll("status = 2");
+?>
+<p>
+    Clients avec contrats: <?php echo count($customers_contrats) ?><br />
+    Clients enregistr&eacute;s: <?php echo count($customers_enregistres) ?>
+</p>
+
+<h2>Factures</h2>
+<p class="notice">Rien &agrave; signaler.</p>
+<!--<p class="notice">Cette fonction n'est pas encore activ&eacute;e.</p>
+ <ul>
+    <li>En attente de paiement (moins de 30 jours):</li>
+    <li>En retard (30 jours et plus):</li>
+</ul>
+-->
+<h2>Informations sur vous</h2>
+<p>Votre profil: <b><?php $user = Zend_Auth::getInstance()->getIdentity(); echo implode(', ', $auth->getIdentity()->groups); ?></b></p>
+
+<?php 
+// ================ dev only ====================
+
+/*$acl = Zend_Registry::get('acl');
+
+echo 'Alpha:';
+echo $acl->isAllowed('administrator', 'alpha') ?
+     "autoris&eacute;" : "refus&eacute;"; // autoris&eacute;*/
+
+/*echo '<br />USER - home - modify:';
+echo $acl->isAllowed('user', 'home', 'modify') ?
+     "autoris&eacute;" : "refus&eacute;"; // autoris&eacute;
+
+echo '<br />USER - home - delete:';
+echo $acl->isAllowed('user', 'home', 'delete') ?
+     "autoris&eacute;" : "refus&eacute;"; // autoris&eacute;*/
+// ================ dev only ====================
+/*
+$tr = new Zend_Mail_Transport_Sendmail('-freturn_to_me@example.com');
+Zend_Mail::setZAPTransport($tr);
+
+$mail = new Zend_Mail();
+$mail->setBodyText('This is an example message body');
+$mail->setFrom('chris@example.com', 'Chris Hope');
+$mail->addTo('sheedf@gmail.com', 'Frederic Sheedy');
+$mail->setSubject('This is an example subject');
+$mail->send();
+*/
+?>
+
+<?php
+$user = $auth->getIdentity()->firstname . " " . $auth->getIdentity()->lastname;
+
+$to      = 'sheedf@gmail.com';
+$subject = '[gestion.zapquebec.org] Avis de connexion - ' . $user . " " . date("F j, Y, g:i a");
+$message = 'Utilisateur:'. $user . "\nDate:" . date("F j, Y, g:i a") . "\nGroupes:" . implode(",", $auth->getIdentity()->groups);
+$headers = 'From: info@zapquebec.org' . "\r\n" .
+    'Reply-To: info@zapquebec.org' . "\r\n" .
+    'X-Mailer: PHP/' . phpversion();
+
+$mailread = mail($to, $subject, $message, $headers);
+//echo $mailread;
+?>
+
+
+<br />
+<p>
+Icones: http://www.famfamfam.com/lab/icons/silk/
+<br />
+This work is licensed under a <a href="http://creativecommons.org/licenses/by/2.5/">Creative Commons Attribution 2.5 License.</a>
+</p>

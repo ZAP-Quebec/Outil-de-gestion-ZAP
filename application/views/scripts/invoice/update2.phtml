@@ -1,0 +1,78 @@
+<h1>Facture # <?php echo $this->form->getValue('id'); ?> (<?php echo ZAP_Model_Invoices::translateStatus($this->form->getValue('status')); ?>)</h1>
+<?php $this->dialogContainer('dialog1',
+null, array('draggable' => false,
+'modal' => true,
+'resizable' => false,
+'title' => 'Bienvenu sur le site de gestion!',
+'closeOnEscape' => true)); ?>
+<div id="dialog1" class="dialog1"><p>L'outil de gestion est en développement.</p><br/>
+<p>
+Vous pouvez consulter la liste des personnes ayant accès à partir du lien <span style="color: blue;">Liste des utilisateurs</span>.</p><br/>
+<p>Le module Moijezap est fonctionnel depuis septembre et <span style="color: red;">les données sont modifiées en temps réel avec le site moijezap.org</span></p><br/><p>Aussi
+, prendre note que <span style="color: red;">les données (excluant le module moijezap) seront supprimées</span> pour laisser place aux réelles en temps venu.</p><br/><p>Bonne visite.</p></div>
+
+<?php $this->form->setAction($this->url()); echo $this->form; ?>
+<div class="test">test1:</div>
+<script type="text/javascript">
+
+$j(document).ready(function() {
+  
+  $j("#addElement").click( 
+      function() { 
+          ajaxAddField();
+       }
+    );
+  
+  $j("#removeElement").click(
+      function() {
+          removeField();
+      }
+    );
+  }
+);
+
+// Get value of id - integer appended to dynamic form field names and ids
+var line_id = $j("#id").val();
+
+// Retrieve new element's html from controller
+function ajaxAddField() {
+  $j.ajax(
+    {
+      type: "POST",
+      url: "<?php echo $this->url(array('action' => 'newline', 'format' => 'html')); ?>",
+      data: "line_id=" + line_id,
+      success: function(newElement) {
+        // Insert new element before the Add button
+        $j(".form").before(newElement);
+        $j("div#test").html(newElement);
+        $j('.test').append('<p>Test</p>');
+        
+        
+        // Increment and store id
+        $j("#id").val(++line_id);
+      }
+    }
+  );
+}
+
+function removeField() {
+
+  // Get the last used id
+  var lastId = $j("#id").val() - 1;
+
+  // Build the attribute search string.  This will match the last added  dt and dd elements.  
+  // Specifically, it matches any element where the id begins with 'newName<int>-'.
+  searchString = '*[id^=newName' + lastId + '-]';
+
+  // Remove the elements that match the search string.
+  $j(searchString).remove()
+
+  // Decrement and store id
+  $j("#id").val(--id);
+}
+
+</script>
+
+
+
+

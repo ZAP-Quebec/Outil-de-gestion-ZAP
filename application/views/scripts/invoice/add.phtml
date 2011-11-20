@@ -1,0 +1,9 @@
+<h1>Nouvelle facture</h1>
+
+<?php
+if ($this->messages) {
+    echo '<div id="message" class="message">'.$this->messages[0].'</div>';
+}
+$this->form->setAction($this->url());
+echo $this->form;
+?>

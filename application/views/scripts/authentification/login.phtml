@@ -1,0 +1,15 @@
+<div class="connexion">
+<img class="logozap" src="http://www.zapquebec.org/wp-content/themes/zap_quebec/images/logo_zapmini.png" />
+<div class="formulaire">
+<img src="<?php echo $this->baseUrl(); ?>/images/titre.png" />
+<?php
+    if ($this->erreur) {
+        echo ("<div>Erreur</div>");
+    }
+?>
+<?php echo $this->form; ?>
+</div>
+
+<!--
+<div><p><a href="#">Vous n'arrivez pas à vous connecter à votre compte?</a></p></div>
+-->

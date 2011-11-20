@@ -1,0 +1,93 @@
+<?php
+    if ($this->myRequests) {
+        echo '<h1>Mes demandes</h1>';
+    } else {
+        echo '<h1>Liste des demandes</h1>';
+    }
+?>
+
+<br />
+
+<div id="markup"> 
+    <table id="requests_entries" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>&Eacute;tat</th>
+		<th></th>
+            </tr>
+        </thead>
+	<tbody>
+
+	<?php foreach ($this->entries as $entry): ?>
+            <tr>
+                <td><?php echo $this->escape($entry->id); ?></td>
+                <td><?php echo $this->escape($entry->summary); ?></td>
+                <td><?php echo $this->escape(ZAP_Model_Requests::translateStatus($entry->status)); ?></td>
+            </tr>
+        <?php endforeach ?>
+        
+        </tbody>
+    </table>
+</div>
+<br />
+
+<script type="text/javascript">
+YAHOO.util.Event.addListener(window, "load", function() {
+    YAHOO.example.EnhanceFromMarkup = function() {
+        
+        formatUrl = function(elCell, oRecord, oColumn, sData) {
+            elCell.innerHTML = "<a href='/gestion/request/update/id/" + oRecord.getData("id") + "' target=''>" + sData + "</a>";
+        };
+        
+        formatUrl2 = function(elCell, oRecord, oColumn, sData) {
+            elCell.innerHTML = "<a href='/gestion/request/delete/id/" + oRecord.getData("id") + "' target=''>" + sData + "</a>";
+        };
+        
+        var myColumnDefs = [
+            {key:"id",label:"Id", sortable:false},
+            {key:"summary",label:"Nom", width:360, formatter:formatUrl, sortable:true},
+            {key:"status",label:"&Eacute;tat",width:80, sortable:true},
+        ];
+        
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("requests_entries"));
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+        myDataSource.responseSchema = {
+            fields: [{key:"id"},
+                    {key:"summary"},
+                    {key:"status"},
+            ]
+        };
+        
+        var myConfigs = {
+            sortedBy:{key:"summary",dir:"desc"},
+            paginator: new YAHOO.widget.Paginator({
+                rowsPerPage: 25,
+                template: YAHOO.widget.Paginator.TEMPLATE_ROWS_PER_PAGE,
+                rowsPerPageOptions: [10,25,50,100],
+                pageLinks: 5,
+                firstPageLinkLabel : "&laquo; premi&egrave;re",
+                previousPageLinkLabel : "&laquo; pr&eacute;c&eacute;dente",
+                nextPageLinkLabel : "suivante &raquo;",
+                lastPageLinkLabel : "derni&egrave;re &raquo;"
+            }),
+            draggableColumns:false
+        }
+
+
+        var myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, myDataSource, myConfigs);
+        
+        myDataTable.hideColumn("id")
+
+     // Enable row highlighting
+        myDataTable.subscribe("rowMouseoverEvent", myDataTable.onEventHighlightRow);
+        myDataTable.subscribe("rowMouseoutEvent", myDataTable.onEventUnhighlightRow);
+        
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
+});
+</script>

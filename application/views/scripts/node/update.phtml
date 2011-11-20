@@ -1,0 +1,90 @@
+<?php
+if ($this->messages) {
+    echo '<div id="message" class="message">'.$this->messages[0].'</div>';
+}
+?>
+
+<h2>Informations g&eacute;n&eacute;rales</h2>
+
+    <table>
+    <tr>
+        <td class="title">&Eacute;tat:</td>
+        <td class="entry"><?php echo $this->escape($this->nodeWifidog->name); ?></td>
+    </tr>
+    <tr>
+        <td class="title">ID:</td>
+        <td class="entry"><?php echo $this->escape($this->nodeWifidog->gw_id); ?></td>
+    </tr>
+    <tr>
+        <td class="title">Date de cr&eacute;ation:</td>
+        <td class="entry"><?php echo $this->escape($this->nodeWifidog->creation_date); ?></td>
+    </tr>
+    <tr>
+        <td class="title">Nom:</td>
+        <td class="entry"><?php echo $this->escape($this->nodeWifidog->name); ?></td>
+    </tr>
+    <tr>
+        <td class="title">Courriel:</td>
+        <td class="entry"><?php echo $this->escape($this->nodeWifidog->public_email); ?></td>
+    </tr>
+    <tr>
+        <td class="title">Site internet:</td>
+        <td class="entry"><a href="<?php echo $this->escape($this->nodeWifidog->home_page_url); ?>"><?php echo $this->escape($this->home_page_domain); ?></a></td>
+    </tr>
+    <tr>
+        <td class="title">Carte:</td>
+        <td class="entry"><a href="<?php echo $this->escape($this->nodeWifidog->map_url); ?>"><?php echo $this->escape($this->map_domain); ?></a></td>
+    </tr>
+    <tr>
+        <td class="title">T&eacute;l&eacute;phone:</td>
+        <td class="entry"><?php echo $this->escape($this->nodeWifidog->public_phone_number); ?></td>
+    </tr>
+    <tr>
+        <td class="title">Adresse:</td>
+        <td class="entry"><?php echo $this->escape($this->nodeWifidog->civic_number); ?>, <?php echo $this->escape($this->nodeWifidog->street_name); ?><br />
+        <?php echo $this->escape($this->nodeWifidog->city); ?> (<?php echo $this->escape($this->nodeWifidog->province); ?>)  <?php echo $this->escape($this->nodeWifidog->postal_code); ?>
+        </td>
+    </tr>
+    <tr>
+        <td class="title">Description:</td>
+        <td class="entry"><?php echo $this->escape($this->nodeWifidog->description); ?></td>
+    </tr>
+    </table>
+
+    <h2>Informations d&eacute;taill&eacute;es</h2>
+    <?php $this->form->setAction($this->url()); ?>
+    <?php //echo $this->form; ?>
+
+    <br />
+    <br />
+    <h2>Fichiers en r&eacute;f&eacute;rence</h2>
+    
+    <?php if ($this->files != FALSE) {?>
+        <table>
+        <tr>
+            <th> </th>
+            <th>Nom du fichier</th>
+        </tr>
+
+        <?php foreach($this->files as $file) : ?>
+        <tr>
+            <?php if ($file['type'] == "dir") {?>
+                <td><img src="https://gestion.zapquebec.org/images/icons/folder.png" /></td>
+                <td><a href="?dir=<?php echo $this->escape($file['name']); ?>/"><?php echo $this->escape($file['name']); ?></a></td>
+            <?php } else { ?>
+                <td><img src="https://gestion.zapquebec.org/images/icons/page_white.png" /></td>
+                <td><a href="?dir=<?php echo $this->escape($this->user_dir); ?>&file=<?php echo $this->escape($file['name']); ?>"><?php echo $this->escape($file['name']); ?></a></td>
+            <?php } ?>
+        </tr>
+        <?php endforeach; ?>
+
+        </table>
+    <?php } else { ?>
+        <p>Aucun fichier en r&eacute;f&eacute;rence</p>
+    <?php } ?>
+    
+    <h2>T&eacute;l&eacute;chargement de fichiers</h2>
+    <?php $this->form_upload->setAction('/node/upload/id/' . $this->nodeWifidog->node_id); ?>
+    <?php echo $this->form_upload; ?>
+    <br />
+    <br />

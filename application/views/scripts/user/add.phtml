@@ -1,0 +1,18 @@
+<h1>Cr&eacute;er un utilisateur</h1>
+
+<?php
+if ($this->messages) {
+    echo '<div id="message" class="message">'.$this->messages[0].'</div>';
+}
+
+if ($this->error) {
+    echo '<div id="error" class="error">'.$this->error.'</div>';
+}
+?>
+
+<p class="info">Ce formulaire permet de donner acc&egrave;s &agrave; un b&eacute;n&eacute;vole &agrave; l'outil de gestion.</p>
+<p>Veuillez vous assurer qu'il y a un <strong>compte existant</strong> dans la base de donn&eacute;es Wifidog avec le courriel fourni.</p>
+
+<?php
+$this->form->setAction($this->url());
+echo $this->form;

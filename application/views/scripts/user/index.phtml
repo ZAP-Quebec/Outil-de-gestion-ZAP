@@ -1,0 +1,23 @@
+<h1>Liste des utilisateurs</h1>
+<p class="info">Ceci est la liste des utilisateurs de l'outil de gestion.</p>
+
+    <ul class="user-list clickable-list">
+        <?php foreach($this->entries as $entry) : ?>
+            <li class="item">
+            <span class="edit"><a href="/user/update/id/<?php echo $this->escape($entry->id); ?>">Modifier</a></span>
+                    <?php $UsersWifidog = new ZAP_Model_UsersWifidog; echo $this->getGravatar($UsersWifidog->getEmail($entry->id)); ?>
+                    <h5 class="description"><?php echo $this->escape($entry->firstname . " " . $entry->lastname); ?></h5>
+                    <p>
+                        <?php if ($this->escape($entry->status) === 'allowed') { ?>
+                        Compte actif
+                        <?php } else { ?>
+                        Compte d&eacute;sactiv&eacute;
+                        <?php } ?>
+
+                    <br />
+                        Groupes: <?php echo implode(", ", $this->getUserGroups($entry->id)); ?>
+                    </p>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+

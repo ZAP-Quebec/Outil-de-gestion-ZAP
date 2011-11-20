@@ -1,0 +1,40 @@
+<?php //$this->ajaxLink("Supprimer le commentaire", "/gestion/comment/delete", array('beforeSend' => '$j(\'#container\').hide();', 'update' => '#container'));
+?>
+
+<h1>Demande # <?php echo $this->form->getValue('id'); ?> (<?php echo ZAP_Model_Requests::translateStatus($this->form->getValue('status')); ?>)</h1>
+<?php
+if ($this->messages) {
+    echo '<div id="message" class="message">'.$this->messages[0].'</div>';
+}
+
+$this->form->setAction($this->url());
+echo $this->form;
+?>
+<h3>Commentaires</h3>
+
+<?php
+    $users = new ZAP_Model_Users();
+    foreach ($this->comments as $comment) {
+        $username = $users->getUserName($comment->id_user);
+        $commentDetails = nl2br(str_replace("\'", "'", $comment->comment));
+        echo '
+                        <div>
+                            <p>
+                                '.$comment->date.' par <a href="/user/view/'.$comment->id_user.'">'.$username.'</a> | <a href="/comment/update/id/'.$comment->id.'">Modifier</a> - <a href="/comment/delete/id/'.$comment->id.'">Supprimer</a>
+                            </p>
+                            <div>
+                                <div>
+                                    <p>
+                                        '.$commentDetails.'
+                                    </p>
+                                </div>
+                            </div>
+                        </div>';
+    }
+    ?>
+
+    <h3>Ajouter un commentaire</h3>
+    <?php $this->formComment->setAction('/comment/add/module/request/reference/'.$this->form->getValue('id')); echo $this->formComment; ?>
+
+<h3>Historique</h3>
+<p>En développement</p>

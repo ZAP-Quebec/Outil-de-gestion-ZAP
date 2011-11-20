@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="fr-FR">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>ZAP Québec  </title>
+
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/reset/reset-min.css" />
+
+<link rel="alternate" type="application/rss+xml" title="ZAP Québec RSS Feed" href="http://www.zapquebec.org/feed/" />
+<link rel="pingback" href="http://www.zapquebec.org/xmlrpc.php" />
+
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.zapquebec.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.zapquebec.org/wp-includes/wlwmanifest.xml" /> 
+
+<link rel="stylesheet" href="http://www.zapquebec.org/wp-content/themes/zap_quebec/style.css" type="text/css" media="screen" />
+
+<?php echo $this->jQuery(); ?>
+<?php //$this->jQuery()->addStylesheet('/js/themes/base/ui.all.css'); ?>
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/css/themes/base/ui.all.css" type="text/css" media="screen" />
+
+<!--begin custom header content for this example-->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/datatable/assets/skins/sam/datatable.css" />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/paginator/assets/skins/sam/paginator.css" />
+
+
+<?php echo $this->headLink()->appendStylesheet('/css/style.css') ?>
+
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/datatable/datatable-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/paginator/paginator-min.js"></script>
+
+<!--end custom header content for this example-->
+
+<?php $acl = Zend_Registry::get('acl'); ?>
+</head>
+
+<body class="yui-skin-sam">
+	<div id="conteneur">
+		<ul id="menu">
+		</ul>
+		<div id="content">
+			<ul id="langues">
+				<li class="connect"><?php $auth = Zend_Auth::getInstance(); echo($auth->getIdentity()->firstname .' '. $auth->getIdentity()->lastname); ?></li>
+                <?php if ($this->isAllowed('alpha')) {?> <li class="connect"><a href="#">Param&egrave;tres</a></li> <?php } ?>
+                <li class="connect"><a href="http://www.zapquebec.org/wiki/index.php/Aide/Gestion" target="_blank">Aide</a></li>
+				<li class="logout"><a href="<?php echo $this->url( array( 'controller'=>'authentification', 'action'=> 'logout'), 'default', true) ?>">D&eacute;connexion</a></li>
+			</ul>
+
+			<div id="bandeau">
+				<div id="logo"><a href="https://gestion.zapquebec.org/"><img src="http://www.zapquebec.org/wp-content/themes/zap_quebec/images/logo_zapmini.png" /></a></div>
+				<div id="zsd">
+					<!--
+				    <ul>
+				        <li class="active"><a href="http://www.zapquebec.org" id="FR" class="lang">FR</a></li>
+				        <li class=""><a href="http://www.zapquebec.org/english" class="lang" id="EN">EN</a></li>
+				        <li class=""><a href="http://www.zapquebec.org/espanol" class="lang" id="ES">ES</a></li>
+				    </ul>
+				    -->
+				    <div id="promo" class="FR">
+				    </div>
+				
+				</div>
+			</div>
+			
+			<br />
+			<div id="news_container" class="graybox accueil">
+
+				<div id="haut"></div>
+				<div id="bas"></div>
+				
+													<div id="text_content">
+<?php echo $this->layout()->content ?>
+					</div>
+<div id="sidebar">
+
+<ul>
+    <li id="recherche">
+        <form method="get" id="searchform" action="http://www.zapquebec.org/">
+            <div id="search">
+                <div id="s_cont"><input type="text" name="s" id="s" value="RECHERCHE" onclick="this.value='';this.style.color='black'" /></div>
+                <div id="searchsubmit_cont"><input type="submit" id="searchsubmit" value="" /></div>
+            </div>
+        </form>
+    </li>
+
+    <li class="categories">
+        <h2>Tableau de bord</h2>
+        <ul>
+            <li><a href="<?php echo $this->url(array('controller' => 'index','action' => 'index'), 'default', true) ?>">Accueil</a></li>
+            <?php if ($this->isAllowed('alpha-request')) {?><li><a href="<?php echo $this->url(array('controller' => 'request','action' => 'index','id' => $auth->getIdentity()->user_id), 'default', true) ?>">Mes demandes</a></li>
+        <?php } ?></ul>
+    </li>
+<?php if ($this->isAllowed('alpha-moijezap')) {?>
+    <li class="categories">
+        <h2>Moijezap.org</h2>
+        <ul>
+            <li><a href="<?php echo $this->url(array('controller' => 'moijezap','action' => 'index'), 'default', true) ?>">Gestion des votes</a></li>
+        </ul>
+    </li>
+<?php } ?>
+    <li class="categories">
+<?php if ($this->isAllowed('alpha-request')) {?>
+        <h2>Demandes</h2>
+        <ul>
+            <li><a href="<?php echo $this->url(array('controller' => 'request','action' => 'add'), 'default', true) ?>">Ajouter une demande</a></li>
+            <li><a href="<?php echo $this->url(array('controller' => 'request','action' => 'index'), 'default', true) ?>">Liste des demandes</a></li>
+        </ul>
+    </li>
+<?php } ?>
+    <li class="categories">
+        <h2>Technique</h2>
+        <ul>
+<?php if ($this->isAllowed('node')) {?>
+            <li><a href="<?php echo $this->url(array('controller' => 'node','action' => 'index'), 'default', true) ?>">Dossiers techniques</a></li>
+<?php } ?>
+            <?php if ($this->isAllowed('filemanager')) {?>
+            <li><a href="<?php echo $this->url(array('controller' => 'filemanager','action' => 'index'), 'default', true) ?>">Gestionnaire de fichiers</a></li>
+            <?php } ?>
+            <li>&nbsp;</li>
+            <!--<li><a href="<?php echo $this->url(array('controller' => 'router','action' => 'add'), 'default', true) ?>">Ajouter un routeur</a></li>
+            <li><a href="<?php echo $this->url(array('controller' => 'router','action' => 'index'), 'default', true) ?>">Liste des routeurs</a></li>
+            <li>&nbsp;</li>
+            <li><a href="<?php echo $this->url(array('controller' => 'antenna','action' => 'add'), 'default', true) ?>">Ajouter une antenne</a></li>
+            <li><a href="<?php echo $this->url(array('controller' => 'antenna','action' => 'index'), 'default', true) ?>">Liste des antennes</a></li>
+        -->
+        </ul>
+    </li>
+<?php if ($this->isAllowed('alpha')) {?><li>&nbsp;</li>
+    <li class="categories">
+        <h2>Contacts</h2>
+        <ul>
+            <li><a href="<?php echo $this->url(array('controller' => 'contact','action' => 'add'), 'default', true) ?>">Ajouter un contact</a></li>
+            <li><a href="<?php echo $this->url(array('controller' => 'contact','action' => 'index'), 'default', true) ?>">Liste des contacts</a></li>
+        </ul>
+    </li>
+<?php } ?>
+    <li class="categories">
+        <h2>Clients</h2>
+        <ul>
+          <?php if ($this->isAllowed('customer')) {?>
+            <li><a href="<?php echo $this->url(array('controller' => 'customer','action' => 'add'), 'default', true) ?>">Ajouter un client</a></li>
+            <li><a href="<?php echo $this->url(array('controller' => 'customer','action' => 'index'), 'default', true) ?>">Liste des clients</a></li>
+            <?php } ?>
+        </ul>
+    </li>
+
+
+    <li class="categories">
+        <h2>Administration</h2>
+        <ul>
+            <li><a href="<?php echo $this->url(array('controller' => 'user','action' => 'add'), 'default', true) ?>">Cr&eacute;er un utilisateur</a></li>
+<?php if ($this->isAllowed('admin-user-management')) {?>
+            <li><a href="<?php echo $this->url(array('controller' => 'user','action' => 'groups'), 'default', true) ?>">G&eacute;rer les groupes</a></li>
+<?php } ?>
+            <li><a href="<?php echo $this->url(array('controller' => 'user','action' => 'index'), 'default', true) ?>">Liste des utilisateurs</a></li>
+            <?php if ($this->isAllowed('alpha-user-modification')) {?><li><a href="<?php echo $this->url(array('controller' => 'request','action' => 'index'), 'default', true) ?>">Log</a></li>
+        <?php } ?></ul>
+    </li>
+
+</ul>
+
+<div class="clearer"></div>
+
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

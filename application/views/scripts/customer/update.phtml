@@ -1,0 +1,78 @@
+<h1>Fiche client</h1>
+
+<?php
+if ($this->messages) {
+    echo '<div id="message" class="message">'.$this->messages[0].'</div>';
+}
+
+if ($this->error) {
+    echo '<div id="error" class="error">'.$this->error.'</div>';
+}
+
+$this->form->setAction($this->url());
+echo $this->form;
+?>
+
+<p>
+    <a href="<?php echo $this->url(array('controller' => 'customer','action' => 'delete','id' => $this->customer_id), 'default', true) ?>">Supprimer ce client</a>
+</p>
+
+<?php if ($this->isAllowed('invoice')) {?>
+<h3>Facturation</h3>
+<a href="<?php echo $this->url(array('controller' => 'invoice','action' => 'add', 'id_customer' => $this->customer_id), 'default', true) ?>">Ajouter une facture</a>
+<br /><table class="lines">
+  <?php
+  foreach ($this->invoices as $invoice) {
+      echo "<tr><td>$invoice->id</td>";
+      echo '<td><a href="../../../invoice/update/id/' .$invoice->id. '">'.$invoice->date.'</a></td>';
+      echo "<td>$invoice->status</td>";
+      echo '<td><a href="../../../invoice/print/id/' .$invoice->id. '">Imprimer</a></td></tr>';
+  }
+  ?>
+</table>
+<?php } ?>
+
+<h3>Commentaires</h3>
+
+<?php
+
+
+    $users = new ZAP_Model_Users();
+    foreach ($this->comments as $comment) {
+        $username = $users->getUserName($comment->id_user);
+        $commentDetails = nl2br(str_replace("\'", "'", $comment->comment));
+        //| <a href="/comment/update/id/'.$comment->id.'">Modifier</a> - <a href="/comment/delete/id/'.$comment->id.'">Supprimer</a>
+        $UsersWifidog = new ZAP_Model_UsersWifidog; 
+        
+        
+        $timestamp = strtotime($comment->time);
+        echo '<div class="comment">
+        
+                          <div class="comment-title">
+                      <p>
+                          <a href="/user/view/'.$comment->id_user.'">'.$username.'</a><br /> 
+                          <span class="time">'. $comment->date .' @ '.date('H:i', $timestamp).'</span>
+                      </p>
+                  </div>';
+        if ($comment->id_user != 'sysadmin') {
+            echo $this->getGravatar($UsersWifidog->getEmail($comment->id_user));
+        } else {
+            echo '<img class="gravatar" src="'.$this->baseUrl().'/images/zapquebecsysadmin80.png" />';
+
+        }
+        
+        echo '  
+                  <div class="comment-content">
+                      <p>
+                          '.$commentDetails.'
+                      </p>
+                  </div>
+              </div>';
+    }
+?>
+
+<h3>Ajouter un commentaire</h3>
+<?php $this->formComment->setAction('/comment/add/module/customer/reference/'.$this->customer_id); echo $this->formComment; ?>
+
+<h3>Historique</h3>
+<p>En développement</p>

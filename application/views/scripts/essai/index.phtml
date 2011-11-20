@@ -1,0 +1,244 @@
+<h1>Page d'essais</h1>
+
+<h2>Debug</h2>
+<?php Zend_Debug::dump("test","Yes"); ?>
+
+<h2>Connexion Google Client (on)</h2>
+<?php
+      // Enter your Google account credentials
+      $service = Zend_Gdata_Calendar::AUTH_SERVICE_NAME;
+      $email = 'sysadmin@zapquebec.org';
+      $passwd = 'cde3nhy6';
+
+      try {
+         $client = Zend_Gdata_ClientLogin::getHttpClient($email, $passwd, $service);
+      } catch (Zend_Gdata_App_CaptchaRequiredException $cre) {
+          echo 'URL of CAPTCHA image: ' . $cre->getCaptchaUrl() . "\n";
+          echo 'Token ID: ' . $cre->getCaptchaToken() . "\n";
+      } catch (Zend_Gdata_App_AuthException $ae) {
+         echo 'Problem authenticating: ' . $ae->exception() . "\n";
+      }
+
+      $cal = new Zend_Gdata_Calendar($client);
+
+    try {
+        $listFeed= $cal->getCalendarListFeed();
+    } catch (Zend_Gdata_App_Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+
+      echo "<h1>Calendar List Feed</h1>";
+      echo "<ul>";
+
+      foreach ($listFeed as $calendar) {
+          echo "<li>" . $calendar->title .
+               " (Event Feed: " . $calendar->id . ")</li>";
+      }
+
+      echo "</ul>";
+?>
+
+
+    <?php
+    // load Zend Gdata libraries
+   /* require_once 'Zend/Loader.php';
+    Zend_Loader::loadClass('Zend_Gdata');
+    Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
+    Zend_Loader::loadClass('Zend_Http_Client');
+    Zend_Loader::loadClass('Zend_Gdata_Query');
+    Zend_Loader::loadClass('Zend_Gdata_Feed');*/
+    
+    // set credentials for ClientLogin authentication
+     $user = 'sysadmin@zapquebec.org';
+      $pass = 'cde3nhy6';
+    
+    try {
+      // perform login and set protocol version to 3.0
+      $client = Zend_Gdata_ClientLogin::getHttpClient(
+        $user, $pass, 'cp');
+      $gdata = new Zend_Gdata($client);
+      $gdata->setMajorProtocolVersion(3);
+      
+      // perform query and get result feed
+      $query = new Zend_Gdata_Query(
+        'http://www.google.com/m8/feeds/contacts/default/full');
+      $feed = $gdata->getFeed($query);
+      
+      // display title and result count
+      ?>
+      
+      <h2><?php echo $feed->title; ?></h2>
+      <div>
+      <?php echo $feed->totalResults; ?> contact(s) found.
+      </div>
+      
+      <?php
+      // parse feed and extract contact information
+      // into simpler objects
+      $results = array();
+      foreach($feed as $entry){
+        $xml = simplexml_load_string($entry->getXML());
+        $obj = new stdClass;
+        $obj->id = (string) $entry->id;
+        $obj->name = (string) $entry->title;
+        $obj->orgName = (string) $xml->organization->orgName; 
+        $obj->orgTitle = (string) $xml->organization->orgTitle; 
+      
+        foreach ($xml->email as $e) {
+          $obj->emailAddress[] = (string) $e['address'];
+        }
+        
+        foreach ($xml->phoneNumber as $p) {
+          $obj->phoneNumber[] = (string) $p;
+        }
+        foreach ($xml->website as $w) {
+          $obj->website[] = (string) $w['href'];
+        }
+        
+        $results[] = $obj;  
+      }
+    } catch (Exception $e) {
+      die('ERROR:' . $e->getMessage());  
+    }
+    ?>
+    
+    <?php
+    // display results
+    foreach ($results as $r) {
+    ?>
+    <div class="entry">
+      <div class="name"><?php echo (!empty($r->name)) ? 
+       $r->name : 'Name not available'; ?></div>
+      <div class="data">
+        <table>
+          <tr>
+            <td>ID</td>
+            <td><?php echo $r->id; ?></td>
+          </tr>
+          <tr>
+            <td>Organization</td>
+            <td><?php echo $r->orgName; ?></td>
+          </tr>
+          <tr>
+            <td>Role</td>
+            <td><?php echo $r->orgTitle; ?></td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td><?php echo @join(', ', $r->emailAddress); ?></td>
+          </tr>
+          <tr>
+            <td>Phone</td>
+            <td><?php echo @join(', ', $r->phoneNumber); ?></td>
+          </tr>
+          <tr>
+            <td>Web</td>
+            <td><?php echo @join(', ', $r->website); ?></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <?php
+    }
+    ?>
+
+
+<h2>Ajout contact Google (on)</h2>
+<?php
+// load Zend Gdata libraries
+
+
+// set credentials for ClientLogin authentication
+     $user = 'sysadmin@zapquebec.org';
+      $pass = 'cde3nhy6';
+
+try {
+  // perform login and set protocol version to 3.0
+  $client = Zend_Gdata_ClientLogin::getHttpClient(
+    $user, $pass, 'cp');
+  $gdata = new Zend_Gdata($client);
+  $gdata->setMajorProtocolVersion(3);
+  
+  // create new entry
+  $doc  = new DOMDocument();
+  $doc->formatOutput = true;
+  $entry = $doc->createElement('atom:entry');
+  $entry->setAttributeNS('http://www.w3.org/2000/xmlns/' ,
+   'xmlns:atom', 'http://www.w3.org/2005/Atom');
+  $entry->setAttributeNS('http://www.w3.org/2000/xmlns/' ,
+   'xmlns:gd', 'http://schemas.google.com/g/2005');
+  $doc->appendChild($entry);
+  
+  // add name element
+  $name = $doc->createElement('gd:name');
+  $entry->appendChild($name);
+  $fullName = $doc->createElement('gd:fullName', 'Jack Frost Test');
+  $name->appendChild($fullName);
+  
+  // add email element
+  $email = $doc->createElement('gd:email');
+  $email->setAttribute('address' ,'jack.frost@example.com');
+  $email->setAttribute('rel' ,'http://schemas.google.com/g/2005#home');
+  $entry->appendChild($email);
+  
+  // add org name element
+  $org = $doc->createElement('gd:organization');
+  $org->setAttribute('rel' ,'http://schemas.google.com/g/2005#work');
+  $entry->appendChild($org);
+  $orgName = $doc->createElement('gd:orgName', 'ZAP Quebec');
+  $org->appendChild($orgName);
+  
+  // insert entry
+  /*
+  $entryResult = $gdata->insertEntry($doc->saveXML(), 
+   'http://www.google.com/m8/feeds/contacts/default/full');*/
+  echo 'The ID of the new entry is: ' . $entryResult->id;
+} catch (Exception $e) {
+  die('ERROR:' . $e->getMessage());
+}
+?>
+
+
+<h2>Connexion LDAP (off)</h2>
+<?php //echo $this->acctname; ?>
+
+
+
+<h2>Envoi courriel - essai (off)</h2>
+<?php
+
+//envoi
+
+//$tr = new Zend_Mail_Transport_Smtp('mail.zapquebec.org');
+//Zend_Mail::setZAPTransport($tr);
+/*
+
+$mail = new Zend_Mail('UTF-8');
+$mail->setBodyText('Ceci est un essai éé.')
+    ->setFrom('no-reply@zapquebec.org', 'ZAP Québec')
+    ->addTo('sheedf@gmail.com', 'Frédéric Sheedy')
+    ->setSubject('Test 1')
+    ->send();
+*/
+//reception
+
+/*$mail = new Zend_Mail_Storage_Pop3(array('host'     => 'mail.zapquebec.org',
+                                         'user'     => 'sysadmin@zapquebec.org',
+                                         'password' => 'cde3nhy6'));
+echo "<br/><br/>";
+echo $mail->countMessages() . " courriels trouv&eacute;s\n";
+echo "<br/>";
+foreach ($mail as $message) {
+    echo utf8_encode("Courriel de '{$message->from}': {$message->subject}\n");
+    echo "<br/>";
+}
+*/
+//print_r($message);
+
+
+//essai ACL
+/*$acl = new ZAP_Plugin_Acl();
+echo $acl->isAllowed('user', 'customer') ? 'allowed' : 'denied';
+*/
+
+?>

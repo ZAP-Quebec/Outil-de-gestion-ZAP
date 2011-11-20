@@ -1,0 +1,82 @@
+<h1>Liste des clients</h1>
+<br />
+
+<?php
+if ($this->messages) {
+    echo '<div id="message" class="message">'.$this->messages[0].'</div>';
+}
+
+/*echo $this->dialogContainer('test', 'Ce module est en développement et certaines fonctions risques de ne pas fonctionner.', array(
+                'bgiframe'         => true,
+                'autoOpen'         => true,
+                'draggable'        => false,
+                'modal'            => true,
+                'resizable'        => false,
+                'title'            => 'Avertissement',
+                'closeOnEscape'    => true));*/
+?>
+
+<p class="info">Cette page vous &eacute;num&egrave;re les clients de ZAP Qu&eacute;bec.</p>
+<div id="markup"> 
+    <table id="customers_entries" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nom</th>
+                <th>&Eacute;tat</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        <?php foreach($this->entries as $entry) : ?>
+            <tr> 
+                <td><?php echo $this->escape($entry->id); ?></td>
+                <td><?php echo $this->escape($entry->name); ?></td>
+                <td><?php echo $this->echoCustomerStatus($entry->status); ?></td>
+            </tr> 
+        <?php endforeach; ?>
+        
+        </tbody>
+    </table>
+</div>
+<br />
+
+<script type="text/javascript">
+YAHOO.util.Event.addListener(window, "load", function() {
+    YAHOO.example.EnhanceFromMarkup = function() {
+
+        formatUrl = function(elCell, oRecord, oColumn, sData) {
+            elCell.innerHTML = "<a href='customer/update/id/" + oRecord.getData("id") + "' >" + sData + "</a>";
+        };
+
+        var myColumnDefs = [
+            {key:"id",label:"No", formatter:YAHOO.widget.DataTable.formatNumber, sortable:true},
+            {key:"name",label:"Nom", width:400, formatter:formatUrl, sortable:true},
+            {key:"status",label:"&Eacute;tat", width:80, sortable:true},
+        ];
+
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("customers_entries"));
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+        myDataSource.responseSchema = {
+            fields: [{key:"id", parser:"number"},
+                    {key:"name"},
+                    {key:"status"},
+            ]
+        };
+
+        var myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, myDataSource,
+                {caption:"",
+                sortedBy:{key:"id",dir:"desc"}}
+        );
+
+     // Enable row highlighting
+        myDataTable.subscribe("rowMouseoverEvent", myDataTable.onEventHighlightRow);
+        myDataTable.subscribe("rowMouseoutEvent", myDataTable.onEventUnhighlightRow);
+        
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
+});
+</script>

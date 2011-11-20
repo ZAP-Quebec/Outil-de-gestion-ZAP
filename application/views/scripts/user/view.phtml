@@ -1,0 +1,74 @@
+<?php echo $this->render('header.phtml'); ?>
+    <?php
+            // Erreur
+            if ($this->error) {
+                echo '<div class="erreur">'.$this->error.'</div>';
+            }
+    ?>
+    <?php
+            // Messages
+            if ($this->message) {
+                echo '<div class="message">'.$this->message.'</div>';
+            }
+    ?>
+    <h2>Informations g&eacute;n&eacute;rales</h2>
+    <table>
+    <tr>
+        <td class="title">&Eacute;tat:</td>
+        <td class="entry"><?php echo $this->node_deployment_status; ?></td>
+    </tr>
+    <tr>
+        <td class="title">ID:</td>
+        <td class="entry"><?php echo $this->escape($this->node_wifidog->gw_id); ?></td>
+    </tr>
+    <tr>
+        <td class="title">Date de cr&eacute;ation:</td>
+        <td class="entry"><?php echo $this->escape($this->node_wifidog->creation_date); ?></td>
+    </tr>
+    <tr>
+        <td class="title">Nom:</td>
+        <td class="entry"><?php echo $this->escape($this->node_wifidog->name); ?></td>
+    </tr>
+    <tr>
+        <td class="title">Courriel:</td>
+        <td class="entry"><?php echo $this->escape($this->node_wifidog->public_email); ?></td>
+    </tr>
+    <tr>
+        <td class="title">Site internet:</td>
+        <td class="entry"><a href="<?php echo $this->escape($this->node_wifidog->home_page_url); ?>"><?php echo $this->escape($this->home_page_domain); ?></a></td>
+    </tr>
+    <tr>
+        <td class="title">Carte:</td>
+        <td class="entry"><a href="<?php echo $this->escape($this->node_wifidog->map_url); ?>"><?php echo $this->escape($this->map_domain); ?></a></td>
+    </tr>
+    <tr>
+        <td class="title">T&eacute;l&eacute;phone:</td>
+        <td class="entry"><?php echo $this->escape($this->node_wifidog->public_phone_number); ?></td>
+    </tr>
+    <tr>
+        <td class="title">Adresse:</td>
+        <td class="entry"><?php echo $this->escape($this->node_wifidog->civic_number); ?>, <?php echo $this->escape($this->node_wifidog->street_name); ?><br />
+        <?php echo $this->escape($this->node_wifidog->city); ?> (<?php echo $this->escape($this->node_wifidog->province); ?>)  <?php echo $this->escape($this->node_wifidog->postal_code); ?>
+        </td>
+    </tr>
+    <tr>
+        <td class="title">Description:</td>
+        <td class="entry"><?php echo $this->escape($this->node_wifidog->description); ?></td>
+    </tr>
+    </table>
+
+    <h2>Informations d&eacute;taill&eacute;es</h2>
+    <?php echo $this->form; ?>
+
+    <h2>Images en r&eacute;f&eacute;rence</h2>
+
+    <form method="post" enctype="multipart/form-data" action="<?php echo $this->baseUrl; ?>/node/upload/id/<?php echo $this->node_wifidog->node_id; ?>">
+<input type="file" name="file" class="file" size="8"/>
+<input type="submit" name="submit" id="submit" value="Ajouter">
+</form>
+
+    <?php foreach(split(':', $this->form->getValue('images')) as $image) : ?>
+        <a href="<?php echo $this->url(array('controller'=>'node', 'action'=>'view', 'id'=>$nodeWifidog->node_id));?>"><?php echo $this->escape($image);?></a><br />
+    <?php endforeach; ?>
+
+<?php echo $this->render('footer.phtml'); ?>

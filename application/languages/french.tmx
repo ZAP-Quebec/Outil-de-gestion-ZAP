@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tmx version="1.4">
+    <body>
+        <tu tuid='notAlnum'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' ne contient pas que des lettres et/ou des chiffres.]]></seg></tuv>
+        </tu>
+        <tu tuid='notAlpha'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' ne contient pas que des lettres.]]></seg></tuv>
+        </tu>    
+        <tu tuid='notBetween'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' n'est pas compris entre %min% et %max% inclus.]]></seg></tuv>
+        </tu>    
+        <tu tuid='notBetweenStrict'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' n'est pas compris entre %min% et %max% exclus.]]></seg></tuv>
+        </tu>
+        <tu tuid='dateNotYYYY-MM-DD'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' n'est pas une date au format AAAA-MM-JJ (exemple : 2000-12-31).]]></seg></tuv>
+        </tu>            
+        <tu tuid='dateInvalid'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' n'est pas une date valide.]]></seg></tuv>
+        </tu>            
+        <tu tuid='dateFalseFormat'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' n'est pas une date valide au format JJ/MM/AAAA (exemple : 31/12/2000).]]></seg></tuv>
+        </tu>            
+        <tu tuid='notDigits'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' ne contient pas que des chiffres.]]></seg></tuv>
+        </tu>            
+        <tu tuid='emailAddressInvalid'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' n'est pas une adresse mail valide selon le format adresse@domaine.]]></seg></tuv>
+        </tu>            
+        <tu tuid='emailAddressInvalidHostname'>
+            <tuv xml:lang="fr"><seg><![CDATA['%hostname%' n'est pas un domaine valide pour l'adresse mail '%value%'.]]></seg></tuv>
+        </tu>            
+        <tu tuid='emailAddressInvalidMxRecord'>
+            <tuv xml:lang="fr"><seg><![CDATA['%hostname%' n'accepte pas l'adresse mail '%value%'.]]></seg></tuv>
+        </tu>            
+        <tu tuid='emailAddressDotAtom'>
+            <tuv xml:lang="fr"><seg><![CDATA['%localPart%' ne respecte pas le format dot-atom.]]></seg></tuv>
+        </tu>            
+        <tu tuid='emailAddressQuotedString'>
+            <tuv xml:lang="fr"><seg><![CDATA['%localPart%' ne respecte pas le format quoted-string.]]></seg></tuv>
+        </tu>            
+        <tu tuid='emailAddressInvalidLocalPart'>
+            <tuv xml:lang="fr"><seg><![CDATA['%localPart%' n'est pas une adresse individuelle valide.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileCountTooLess'>
+            <tuv xml:lang="fr"><seg><![CDATA[Pas assez de fichiers ont été transmis ('%count%'). Minimun : '%min%'.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileCountTooMuch'>
+            <tuv xml:lang="fr"><seg><![CDATA[Trop de fichiers ont été transmis ('%count%'). Maximum : '%max%'.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileExtensionFalse'>
+            <tuv xml:lang="fr"><seg><![CDATA[L'extension du fichier '%value%' n'est pas valide.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileExtensionNotFound'>
+            <tuv xml:lang="fr"><seg><![CDATA[Le fichier '%value%' n'a pas été trouvé.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileFilesSizeNotReadable'>
+            <tuv xml:lang="fr"><seg><![CDATA[Un ou plusieurs fichiers ne peuvent pas être lu.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileFilesSizeTooBig'>
+            <tuv xml:lang="fr"><seg><![CDATA[Fichier trop gros. Maximum : '%max%'.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileFilesSizeTooSmall'>
+            <tuv xml:lang="fr"><seg><![CDATA[Fichier trop petit. Minimun : '%min%'.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileUploadErrorAttack'>
+            <tuv xml:lang="fr"><seg><![CDATA[L'upload du fichier '%value%' n'est pas autorisé.]]></seg></tuv>
+        </tu>            
+        <tu tuid='fileUploadErrorCantWrite'>
+            <tuv xml:lang="fr"><seg><![CDATA[Le fichier '%value%' ne peut pas être enregistré.]]></seg></tuv>
+        </tu>            
+        <tu tuid='fileUploadErrorFileNotFound'>
+            <tuv xml:lang="fr"><seg><![CDATA[Le fichier '%value%' n'a pas été trouvé.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileUploadErrorFormSize'>
+            <tuv xml:lang="fr"><seg><![CDATA[Le fichier '%value%' dépasse la taille définie dans le formulaire.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileUploadErrorIniSize'>
+            <tuv xml:lang="fr"><seg><![CDATA[Le fichier '%value%' dépasse la taille maximale défini dans ini.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileUploadErrorNoFile'>
+            <tuv xml:lang="fr"><seg><![CDATA[Le fichier '%value%' n'a pas été chargé.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileUploadErrorNoTmpDir'>
+            <tuv xml:lang="fr"><seg><![CDATA[Aucun répertoire temporaire n'a été trouvé pour le fichier '%value%'.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileUploadErrorPartial'>
+            <tuv xml:lang="fr"><seg><![CDATA[Le fichier '%value%' n'a été que partiellement chargé.]]></seg></tuv>
+        </tu>
+        <tu tuid='fileUploadErrorUnknown'>
+            <tuv xml:lang="fr"><seg><![CDATA[Erreur inconnue lors du chargement du fichier '%value%'.]]></seg></tuv>
+        </tu>
+        <tu tuid='notFloat'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' n'est pas un nombre décimal.]]></seg></tuv>
+        </tu>            
+        <tu tuid='notGreaterThan'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' n'est pas strictement supérieur à '%min%'.]]></seg></tuv>
+        </tu>            
+        <tu tuid='notInt'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' n'est pas un nombre entier.]]></seg></tuv>
+        </tu>            
+        <tu tuid='notLessThan'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' n'est pas strictement inférieur à '%max%'.]]></seg></tuv>
+        </tu>            
+        <tu tuid='isEmpty'>
+            <tuv xml:lang="fr"><seg><![CDATA[Ce champ est vide : vous devez le compléter.]]></seg></tuv>            
+        </tu>            
+        <tu tuid='stringEmpty'>
+            <tuv xml:lang="fr"><seg><![CDATA[Ce champ est vide : vous devez le compléter.]]></seg></tuv>            
+        </tu>            
+        <tu tuid='regexNotMatch'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' ne respecte pas le format '%pattern%'.]]></seg></tuv>
+        </tu>            
+        <tu tuid='stringLengthTooShort'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' fait moins de %min% caractères.]]></seg></tuv>
+        </tu>            
+        <tu tuid='stringLengthTooLong'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' fait plus de %max% caractères.]]></seg></tuv>
+        </tu>    
+        <tu tuid='notSame'>
+            <tuv xml:lang="fr"><seg><![CDATA[Les informations ne concordent pas]]></seg></tuv>
+        </tu>    
+        <tu tuid='missingToken'>
+            <tuv xml:lang="fr"><seg><![CDATA[Impossible de vérifier la concordance, valeur manquante.]]></seg></tuv>
+        </tu>
+        <tu tuid='hostnameIpAddressNotAllowed'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' semble être une adresse IP, ceci n'est pas autorisée]]></seg></tuv>
+        </tu>
+        <tu tuid='hostnameUnknownTld'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' semble être un DNS cependant le TLD est inconnu]]></seg></tuv>
+        </tu>
+        <tu tuid='hostnameDashCharacter'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' semble être un DNS  mais il contient un tiret (-) à une position invalide]]></seg></tuv>
+        </tu>
+        <tu tuid='hostnameInvalidHostnameSchema'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%']]></seg></tuv>
+        </tu>
+        <tu tuid='hostnameUndecipherableTld'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' appears to be a DNS hostname but cannot extract TLD part]]></seg></tuv>
+        </tu>
+        <tu tuid='hostnameInvalidHostname'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' does not match the expected structure for a DNS hostname]]></seg></tuv>
+        </tu>
+        <tu tuid='hostnameInvalidLocalName'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' does not appear to be a valid local network name]]></seg></tuv>
+        </tu>
+        <tu tuid='hostnameLocalNameNotAllowed'>
+            <tuv xml:lang="fr"><seg><![CDATA['%value%' appears to be a local network name but local network names are not allowed]]></seg></tuv>
+        </tu>                                            
+    </body>
+</tmx>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="facture.xsl"?>
+<invoice>
+<id_customer>001</id_customer>
+<id_customer>001</id_customer>
+    <id_customer>001</id_customer>
+</invoice>
+
+contact
+customer
+address
+postalcode
+city_province

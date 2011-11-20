@@ -1,0 +1,35 @@
+<h1>Page d'essais</h1>
+<h2>Connexion LDAP</h2>
+<?php //echo $this->acctname; ?>
+
+<h2>Envoi courriel - essai</h2>
+<?php
+
+//envoi
+
+//$tr = new Zend_Mail_Transport_Smtp('mail.zapquebec.org');
+//Zend_Mail::setDefaultTransport($tr);
+
+
+$mail = new Zend_Mail('UTF-8');
+$mail->setBodyText('Ceci est un essai éé.')
+    ->setFrom('no-reply@zapquebec.org', 'ZAP Québec')
+    ->addTo('sheedf@gmail.com', 'Frédéric Sheedy')
+    ->setSubject('Test 1')
+    ->send();
+
+//reception
+
+$mail = new Zend_Mail_Storage_Pop3(array('host'     => 'mail.zapquebec.org',
+                                         'user'     => 'sysadmin@zapquebec.org',
+                                         'password' => 'cde3nhy6'));
+echo "<br/><br/>";
+echo $mail->countMessages() . " courriels trouv&eacute;s\n";
+echo "<br/>";
+foreach ($mail as $message) {
+    echo utf8_encode("Courriel de '{$message->from}': {$message->subject}\n");
+    echo "<br/>";
+}
+
+//print_r($message);
+?>

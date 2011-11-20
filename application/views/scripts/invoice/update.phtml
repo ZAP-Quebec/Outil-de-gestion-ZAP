@@ -1,0 +1,142 @@
+<h1>Facture # <?php echo $this->form->getValue('id'); ?> (<?php echo $this->form->getValue('status'); ?>)</h1>
+
+<?php
+if ($this->messages) {
+    echo '<div id="message" class="message">'.$this->messages[0].'</div>';
+}
+$this->form->setAction($this->url());
+echo $this->form;
+?>
+<a href="../../print/id/<?php echo $this->form->getValue('id'); ?>">Imprimer la facture</a><br />
+<h3>Items</h3>
+<table class="lines">
+    <tr>
+        <th class="center">Ordre</th>
+        <th>Item</th>
+        <th class="center">NB</th>
+        <th class="center">Prix</th>
+        <th class="center">Total</th>
+        <th></th>
+        <th></th>
+    </tr>
+<?php
+    $sub_total = 0;
+    $currency = new Zend_Currency('fr_CA');
+    if ($this->lines) {
+      foreach ($this->lines as $line) {
+          $sub_total = $sub_total+($line->unit_price * $line->number);
+          //$commentDetails = nl2br(str_replace("\'", "'", $comment->comment));
+          echo '<tr>
+                      <td class="lines_center">'.$line->order.'</td>
+                      <td>'.$line->description.'<br/><span class="line_note">(note: '.$line->note.')</span></td>
+                      <td class="lines_center">'.$line->number.'</td>
+                      <td class="lines_right">'.$currency->toCurrency((float)$line->unit_price).'</td>
+                      <td class="lines_right">'.$currency->toCurrency((float)($line->unit_price * $line->number)).'</td>
+                      <td class="lines_center"><a href="'.$this->baseUrl.'/invoiceline/update/id/'.$line->id.'"><span class="ui-state-default ui-corner-all ui-icon .ui-icon ui-icon-pencil" style="float: left"></span></a></td>
+                      <td class="lines_center"><a href="'.$this->baseUrl.'/invoiceline/delete/id/'.$line->id.'"><span class="ui-state-default ui-corner-all ui-icon .ui-icon ui-icon-trash" style="float: left"></span></a></td>
+                </tr>';
+      }
+    }
+        //calcul taxes
+        // ***********************************************************
+        // TODO: faire une fonction!
+        // IMPORTANT: pour le moment changer dans la vue update aussi!
+        // ***********************************************************
+        
+        /*Janvier 2011:TVQ 5% et TPS 8.5%: http://www.revenu.gouv.qc.ca/fr/entreprise/taxes/tvq_tps/default.aspx
+            2010: 5% et 7.5%
+            janvier 2008: tps passe de 6 à 5%
+            juillet 2006: tps passe de 7 à 6%*/
+        
+        $invoice_date = substr($this->invoice_date, 0, 4);
+
+        switch ($invoice_date) {
+            
+            case 2005:
+                $txt_tps = "TPS (7,0%)";
+                $txt_tvq = "TVQ (7,5%)";
+                $tps = $sub_total * 0.07;
+                $tvq = ($sub_total + $tps) * 0.075;
+                break;
+            
+            case 2006:
+                $txt_tps = "TPS (6,0%)";
+                $txt_tvq = "TVQ (7,5%)";
+                $tps = $sub_total * 0.06;
+                $tvq = ($sub_total + $tps) * 0.075;
+                break;
+            
+            case 2007:
+                $txt_tps = "TPS (6,0%)";
+                $txt_tvq = "TVQ (7,5%)";
+                $tps = $sub_total * 0.06;
+                $tvq = ($sub_total + $tps) * 0.075;
+                break;
+            
+            case 2008:
+                $txt_tps = "TPS (5,0%)";
+                $txt_tvq = "TVQ (7,5%)";
+                $tps = $sub_total * 0.05;
+                $tvq = ($sub_total + $tps) * 0.075;
+                break;
+            
+            case 2009:
+                $txt_tps = "TPS (5,0%)";
+                $txt_tvq = "TVQ (7,5%)";
+                $tps = $sub_total * 0.05;
+                $tvq = ($sub_total + $tps) * 0.075;
+                break;
+
+            case 2010:
+                $txt_tps = "TPS (5,0%)";
+                $txt_tvq = "TVQ (7,5%)";
+                $tps = $sub_total * 0.05;
+                $tvq = ($sub_total + $tps) * 0.075;
+                break;
+            
+            case 2011:
+                $txt_tps = "TPS (5,0%)";
+                $txt_tvq = "TVQ (8,5%)";
+                $tps = $sub_total * 0.05;
+                $tvq = ($sub_total + $tps) * 0.085;
+                break;
+                
+            default:
+                $txt_tps = "TPS (5,0%)";
+                $txt_tvq = "TVQ (8,5%)";
+                $tps = $sub_total * 0.05;
+                $tvq = ($sub_total + $tps) * 0.085;
+            
+            
+          
+        }
+        /*$tps = $sub_total * 0.05;
+        $tvq = ($sub_total + $tps) * 0.075;
+        */
+        
+        $total = $sub_total + $tps + $tvq;
+        // ***********************************************************
+
+    ?>
+
+    <tr>
+        <td class="total lines_right" colspan="4">Total partiel:</td>
+        <td class="lines_right"><?php echo $currency->toCurrency($sub_total); ?></td>
+        <td colspan="2" rowspan="4"></td>
+    </tr>
+    <tr>
+        <td class="total lines_right" colspan="4"><?php  echo $txt_tps; ?>:</td>
+        <td class="lines_right"><?php echo $currency->toCurrency($tps); ?></td>
+    </tr>
+    <tr>
+        <td class="total lines_right" colspan="4"><?php  echo $txt_tvq; ?>:</td>
+        <td class="lines_right"><?php echo $currency->toCurrency($tvq); ?></td>
+    </tr>
+    <tr>
+        <td class="total lines_right" colspan="4">Total à payer:</td>
+        <td class="lines_right"><?php echo $currency->toCurrency($total); ?></td>
+    </tr>
+</table>
+
+<h3>Ajouter un item</h3>
+    <?php $this->formLine->setAction('/invoiceline/add/reference/'.$this->form->getValue('id')); echo $this->formLine; ?>

@@ -1,0 +1,68 @@
+<h1>Liste des factures</h1>
+<br />
+
+<div id="markup"> 
+    <table id="customers_entries" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Client</th>
+                <th>&Eacute;tat</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        <?php foreach($this->entries as $entry) : ?>
+            <tr> 
+                <td><?php echo $this->escape($entry->id); ?></td>
+                <td><?php
+                $customers = new ZAP_Model_Customers();
+                echo $this->escape($customers->find($entry->id_customer)->getName()); ?></td>
+                <td><?php echo $this->escape($entry->status); ?></td>
+            </tr> 
+        <?php endforeach; ?>
+        
+        </tbody>
+    </table>
+</div>
+<br />
+
+<script type="text/javascript">
+YAHOO.util.Event.addListener(window, "load", function() {
+    YAHOO.example.EnhanceFromMarkup = function() {
+
+        formatUrl = function(elCell, oRecord, oColumn, sData) {
+            elCell.innerHTML = "<a href='invoice/update/id/" + oRecord.getData("id") + "' >" + sData + "</a>";
+        };
+
+        var myColumnDefs = [
+            {key:"id",label:"No", formatter:YAHOO.widget.DataTable.formatNumber, sortable:true},
+            {key:"id_customer",label:"Nom du client", width:400, formatter:formatUrl, sortable:true},
+            {key:"status",label:"&Eacute;tat", width:80, sortable:true},
+        ];
+
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("customers_entries"));
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+        myDataSource.responseSchema = {
+            fields: [{key:"id", parser:"number"},
+                    {key:"id_customer"},
+                    {key:"status"},
+            ]
+        };
+
+        var myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, myDataSource,
+                {caption:"",
+                sortedBy:{key:"id",dir:"desc"}}
+        );
+
+     // Enable row highlighting
+        myDataTable.subscribe("rowMouseoverEvent", myDataTable.onEventHighlightRow);
+        myDataTable.subscribe("rowMouseoutEvent", myDataTable.onEventUnhighlightRow);
+        
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
+});
+</script>

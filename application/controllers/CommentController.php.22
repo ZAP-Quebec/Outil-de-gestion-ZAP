@@ -1,0 +1,19 @@
+<?php
+
+class CommentController extends Zend_Controller_Action
+{
+  /* on prépare l'action 'info' a répondre au requête ajax et à renvoyé du json  */
+  public function init()
+  {
+     $ajaxContext = $this->_helper->getHelper('AjaxContext');
+     $ajaxContext->addActionContext('delete', 'json')->initContext();
+  }
+ 
+
+  public function deleteAction()
+  {
+     $id = $this->_getParam('id');
+     /* code de suppression */
+     $this->view->delete = true;
+  }
+}

@@ -1,0 +1,258 @@
+/*table.lines {
+border: 1px medium solid #000000;
+width: 100%;
+}
+td.lines, th.lines {
+border: 1px solid #6495ed;
+width: 100%;
+}*/
+
+.client_name input { width: 95%; }
+
+.lines {
+    width: 100%;
+}
+.lines th {
+    color: #FFFFFF;
+    font-weight: bold;
+    border:1px solid #0080B2;
+    background-color:#0080B2;
+    padding:.5em;
+}
+
+.lines td {
+    border:1px dotted #0080B2;
+    padding:.5em;
+}
+
+.lines_center { text-align: center; }
+.total { font-weight: bold; }
+.lines_right { text-align: right; }
+
+.line_note {
+    color: #0080B2;
+}
+
+
+/* Style message */
+div.message {
+    background-color:   #C3CF21;
+    padding:            0.5em;
+    color:              #fff;
+    text-align:         center;
+    margin-top:         1em;
+    font-weight:        bold;
+}
+
+/* Style pour les pages */
+#text_content ul li { list-style-type: none; margin-left: 0px;}
+
+/* add ----------------------------------------- */
+
+.connexion { margin-top: 50px;}
+.logozap { margin-top: 60px; margin-left: 80px;}
+.formulaire { background: transparent url(../images/boite.png) no-repeat; height: 300px; width: 470px; float: right; margin-right: 50px; padding: 25px 0 0 60px; }
+#loginform { padding-top: 40px;}
+
+/* input { width: 200px; border: 1px solid #C3CF21 }*/
+/*.submit { border: 2px outset #C3CF21 }*/
+
+#loginform input { width: 240px; height: 24px; clear: right; color: #999999; line-height: 28px; font-size: 16px; padding-top: 4px; border: 2px solid #C3CF21; }
+#loginform #submit { width: 102px; height: 30px; background: transparent url(../images/minibuttons_sprite.png) no-repeat scroll 0 -290px; border: transparent none 0; float: left; margin: 0 0 0 0; cursor: pointer; }
+#submit { width: 102px; height: 30px; background: transparent url(../images/minibuttons_sprite.png) no-repeat scroll 0 -290px; border: transparent none 0; float: left; margin: 0 0 0 0; cursor: pointer; }
+#password-label { margin-top: 10px;}
+#submit:hover { background-position: -247px -290px; }
+
+textarea {
+    width: 95%;
+    height: 200px;
+}
+
+/*select {
+    width: 300px;
+    border: 1px solid #C3CF21;
+    padding: 5px;
+}*/
+
+ul.form, ul.errors { list-style: none; margin 0; padding: 0; }
+ul.form li { color: #555; clear: right; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px; }
+ul.form li.hidden { border-bottom: none; }
+ul.form li.left { width: 50%; float: left; }
+ul.form li.right { width: 50%; float: right; }
+ul.form li.full { width: 100%; float: left; }
+ul.form li label { display: block; }
+ul.form li.inline label { display: inline; }
+    
+ul.form li .description { font-size: 0.9em; font-style: italic; }
+    
+ul.form ul.errors li { border: 0; padding: 0; margin: 0; }
+    
+    
+
+span.required, .errors { color: #ff0000; }
+
+
+/* to be corrected */
+
+ul.user-list {
+    padding: 0;
+    border-top: 1px solid #d0d0d0;
+}
+ul.user-list li.item {
+    margin: 0;
+    padding: 12px 5px;
+    border-bottom: 1px solid #eeeeee;
+    border: 1px solid #d0d0d0; border-top-color:white; border-left: 0; border-right: 0;
+    list-style: none;
+    /*cursor: pointer;*/
+    background: #E5E5E5;
+    height: 80px;
+}
+ul.user-list li.item:hover,
+ul.repo-list li.item:hover {
+    background: #CBDCF6;
+    text-decoration:none;
+}
+ul.user-list a.item-link,
+ul.repo-list a.item-link {
+    font-size: 1.7em;
+    font-weight: bold;
+    color: #444;
+    text-decoration:none;
+}
+ul.user-list a.item-link span22,
+ul.repo-list a.item-link span22 {
+    color: #888;
+    text-decoration:none;
+}
+ul.user-list ul.repo em,
+ul.user-list a.item-link em {
+    font-size: 11px;
+    font-style: italic;
+    margin-left: 0.2em;
+    text-decoration:none;
+}
+
+ul.user-list img.gravatar {
+    float: left;
+    margin-right: 20px;
+}
+
+ul.user-list h5.description {
+    margin-top: 10px;
+    color: #000000;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+ul.user-list p {
+    text-align: left;
+}
+
+ul.repo-list span.description1 {
+    float: right;
+    color: #000000;
+    display: inline;
+    padding-top: 25px;
+    line-height: 20px;
+}
+
+ul.repo-list span.description22 {
+    float: left;
+    padding-left: 20px;
+    color: #666;
+    display: block;
+    padding-top: 40px;
+}
+
+ul.user-list span.edit {
+    float: right;
+    font-size: 12px;
+    margin-top: 25px;
+    background: url(../images/icons/page_edit.png) top left no-repeat;
+    padding-left: 20px;
+    display: block;
+    height: 16px;
+    line-height: 20px;
+}
+ul.user-list img.gravatar,
+ul.repo-list img.gravatar {
+    vertical-align: middle;
+}
+ul.user-list ul.bundles,ul.user-list ul.projects {
+    text-align: right;
+    margin: 0;
+}
+ul.user-list ul.bundles li, ul.user-list ul.projects li {
+    display: inline;
+    margin-right: 10px;
+}
+ul.user-list ul.bundles a, ul.user-list ul.projects a {
+    color: #444;
+}
+ul.user-list ul.bundles a span, ul.user-list ul.projects a {
+    color: #888;
+}
+ul.user-list ul.bundles a:hover, ul.user-list ul.projects a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* -----------------------------------------------------------------------
+
+
+ Blueprint CSS Framework 1.0
+ http://blueprintcss.org
+
+   * Copyright (c) 2007-Present. See LICENSE for more info.
+   * See README for instructions on how to use Blueprint.
+   * For credits and origins, see AUTHORS.
+   * This is a compressed file. See the sources in the 'src' directory.
+
+----------------------------------------------------------------------- */
+.error, .alert, .notice, .success, .info {padding:0.8em;margin-bottom:1em;border:2px solid #ddd;}
+.error, .alert {background:#fbe3e4;color:#8a1f11;border-color:#fbc2c4;}
+.notice {background:#fff6bf;color:#514721;border-color:#ffd324;}
+.success {background:#e6efc2;color:#264409;border-color:#c6d880;}
+.info {background:#d5edf8;color:#205791;border-color:#92cae4;}
+.error a, .alert a {color:#8a1f11;}
+.notice a {color:#514721;}
+.success a {color:#264409;}
+.info a {color:#205791;}
+
+
+/*
+box commentaire clients
+*/
+
+
+.comment{
+    clear: both;
+    margin-top: 25px;
+}
+.comment .gravatar{
+    float: left;
+    border:1px solid #D8D8D8;
+    margin-right: 10px;
+    padding: 5px;
+}
+.comment .comment-title {
+    margin: 0px 0px -15px 125px;
+}
+.comment .comment-title a {
+    font-size: 110%;
+    font-weight: 700;
+ }
+.comment .comment-title .time {
+    font-size: 95%;
+ }
+
+.comment-content{
+    background: url(../images/comment.png) no-repeat left top;
+    background-color: white;
+    margin-left: 100px;
+    padding: 5px 10px 12px 25px;
+}

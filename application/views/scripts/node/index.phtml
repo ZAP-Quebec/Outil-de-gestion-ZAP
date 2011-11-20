@@ -1,0 +1,78 @@
+    <h1>Liste des points d'accès</h1>
+
+<?php
+/*echo $this->dialogContainer('test', 'Ce module est en développement et certaines fonctions risques de ne pas fonctionner.', array(
+                'bgiframe'         => true,
+                'autoOpen'         => true,
+                'draggable'        => false,
+                'modal'            => true,
+                'resizable'        => false,
+                'title'            => 'Avertissement',
+                'closeOnEscape'    => true));*/
+?>
+
+<div id="markup"> 
+    <table id="nodes_entries" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nom</th>
+                <th>&Eacute;tat</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        <?php foreach($this->entries as $entry) : ?>
+            <tr> 
+                <td><?php echo $this->escape($entry->node_id); ?></td>
+                <td><?php echo $this->escape($entry->name); ?></td>
+                <td><?php echo $this->escape($entry->node_deployment_status); ?></td>
+            </tr> 
+        <?php endforeach; ?>
+        
+        </tbody>
+    </table>
+</div>
+<br />
+
+<script type="text/javascript">
+YAHOO.util.Event.addListener(window, "load", function() {
+    YAHOO.example.EnhanceFromMarkup = function() {
+
+        formatUrl = function(elCell, oRecord, oColumn, sData) {
+            elCell.innerHTML = "<a href='node/update/id/" + oRecord.getData("node_id") + "' >" + sData + "</a>";
+        };
+
+        var myColumnDefs = [
+            {key:"node_id",label:"No", sortable:false},
+            {key:"name",label:"Nom", width:400, formatter:formatUrl, sortable:true},
+            {key:"status",label:"&Eacute;tat", width:100, sortable:true},
+        ];
+
+        var myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("nodes_entries"));
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+        myDataSource.responseSchema = {
+            fields: [{key:"node_id"},
+                    {key:"name"},
+                    {key:"status"},
+            ]
+        };
+
+        var myDataTable = new YAHOO.widget.DataTable("markup", myColumnDefs, myDataSource,
+                {caption:"",
+                sortedBy:{key:"name",dir:"desc"}}
+        );
+        
+        myDataTable.hideColumn("node_id")
+
+     // Enable row highlighting
+        myDataTable.subscribe("rowMouseoverEvent", myDataTable.onEventHighlightRow);
+        myDataTable.subscribe("rowMouseoutEvent", myDataTable.onEventUnhighlightRow);
+        
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
+});
+</script>

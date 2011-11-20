@@ -1,0 +1,10 @@
+<p>Voulez-vous vraiment supprimer la propostion:
+  '<?php echo $this->escape($this->place['nom']); ?>' ?
+</p>
+<form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post">
+<div>
+  <input type="hidden" name="id" value="<?php echo $this->place['id']; ?>" />
+  <input type="submit" name="del" value="Oui" />
+  <input type="submit" name="del" value="Non" />
+</div>
+</form>

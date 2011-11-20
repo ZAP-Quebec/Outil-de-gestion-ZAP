@@ -1,0 +1,44 @@
+<h1>Facture</h1>
+
+No de la facture: <?php echo $this->escape($this->entry['id']); ?> <br />
+Date de la facture: <?php echo $this->escape($this->entry['date']); ?> <br />
+No de client: <?php echo $this->escape($this->entry['id_customer']); ?> <br />
+
+<h3>Client</h3>
+<?php $customers = new ZAP_Model_Customers();  $this->entry_customer = $customers->find($this->entry['id_customer']); ?>
+<p>
+<?php echo $this->escape($this->entry_customer->getContact_Firstname() . ' ' . $this->entry_customer->getContact_Lastname()); ?> <br />
+<?php echo $this->escape($this->entry_customer->getName()); ?> <br />
+<?php echo $this->escape($this->entry_customer->getAddress()); ?> <br />
+<?php echo $this->escape($this->entry_customer->getCity() . ' (' . $this->entry_customer->getProvince() . ')'); ?> <br />
+<?php echo $this->escape($this->entry_customer->getPostalcode()); ?> <br />
+</p>
+
+<h3>Items</h3>
+<?php echo $this->escape($this->entry['items']); ?>
+<table>
+    <tr>
+        <td>Description</td>
+        <td>Prix</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+
+<p>
+Total partiel
+TPS (5,0%)
+TVQ (7,5%)
+Total à payer
+</p>
